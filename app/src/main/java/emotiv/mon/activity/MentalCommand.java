@@ -63,7 +63,7 @@ public class MentalCommand extends Activity implements EngineInterface {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trainning);
+        setContentView(R.layout.activity_mental);
         engineConnector = EngineConnector.shareInstance();
         engineConnector.delegate = this;
         init();
