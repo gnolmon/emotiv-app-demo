@@ -6,17 +6,20 @@ import android.os.Bundle;
 import android.view.View;
 
 import emotiv.mon.R;
+import emotiv.mon.dataget.EngineConnector;
 
 public class MainActivity extends AppCompatActivity {
-
+    EngineConnector engineConnector;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        EngineConnector.setContext(this);
+        engineConnector = EngineConnector.shareInstance();
     }
 
     public void mentalClick(View v){
-        Intent intent = new Intent(this, MentalCommandActivity.class);
+        Intent intent = new Intent(this, MentalCommand.class);
         startActivity(intent);
     }
 

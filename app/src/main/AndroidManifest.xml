@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="emotiv.mon.activity.MentalCommandActivity"
+            android:name=".activity.MentalCommand"
             android:label="@string/title_activity_trainning_mental">
 
         </activity>

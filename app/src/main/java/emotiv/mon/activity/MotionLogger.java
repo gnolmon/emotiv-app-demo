@@ -29,6 +29,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import emotiv.mon.R;
+import emotiv.mon.dataget.EngineConnector;
 
 /**
  * Created by admin on 9/7/2016.
@@ -47,7 +48,9 @@ public class MotionLogger extends Activity {
     private Timer timer;
     private TimerTask timerTask;
     private int state;
-    protected static final int TYPE_EMOSTATE_UPDATE= 64;
+    EngineConnector engineConnector;
+
+    protected static final int TYPE_EMOSTATE_UPDATE = 64;
 
     TextView tvTime;
     IEdk.IEE_MotionDataChannel_t[] Channel_list = {IEdk.IEE_MotionDataChannel_t.IMD_COUNTER, IEdk.IEE_MotionDataChannel_t.IMD_GYROX,IEdk.IEE_MotionDataChannel_t.IMD_GYROY,
@@ -94,7 +97,7 @@ public class MotionLogger extends Activity {
         });
 
         //Connect to emoEngine
-        IEdk.IEE_EngineConnect(this,"");
+        engineConnector = EngineConnector.shareInstance();
         IEdk.IEE_MotionDataCreate();
         Thread processingThread = new Thread(){
             @Override
@@ -175,9 +178,8 @@ public class MotionLogger extends Activity {
                     IEdk.IEE_MotionDataUpdateHandle(userId);
                     int sample = IEdk.IEE_MotionDataGetNumberOfSample(userId);
                     if(sample > 0){
-                        for(int sampleIdx =0; sampleIdx < sample; sampleIdx++)
-                        {
-                            for(int j=0;j< Channel_list.length;j++){
+                        for (int sampleIdx =0; sampleIdx < sample; sampleIdx++){
+                            for (int j=0;j< Channel_list.length;j++){
                                 double[] eeg_data = IEdk.IEE_MotionDataGet(Channel_list[j]);
                                 addData(eeg_data[sampleIdx]);
                             }
@@ -234,7 +236,6 @@ public class MotionLogger extends Activity {
         try {
             motion_writer.write(input);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.emotiv.insight.IEmoStateDLL;
 import com.emotiv.insight.MentalCommandDetection;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -36,7 +35,7 @@ import emotiv.mon.spinner.SpinnerModel;
 /**
  * Created by admin on 9/7/2016.
  */
-public class MentalCommandActivity extends Activity implements EngineInterface {
+public class MentalCommand extends Activity implements EngineInterface {
     EngineConnector engineConnector;
     Spinner spinAction;
     Button btnTrain, btnClear;
@@ -65,13 +64,12 @@ public class MentalCommandActivity extends Activity implements EngineInterface {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainning);
-        EngineConnector.setContext(this);
         engineConnector = EngineConnector.shareInstance();
         engineConnector.delegate = this;
         init();
     }
 
-    public void init(){
+    private void init(){
         spinAction = (Spinner) findViewById(R.id.spinnerAction);
         btnTrain = (Button) findViewById(R.id.btstartTraing);
         btnClear = (Button) findViewById(R.id.btClearData);
@@ -109,7 +107,7 @@ public class MentalCommandActivity extends Activity implements EngineInterface {
             @Override
             public void onClick(View v) {
                 if (!engineConnector.isConnected ){
-                    Toast.makeText(MentalCommandActivity.this, "You need to connect your headset", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MentalCommand.this, "You need to connect your headset", Toast.LENGTH_LONG).show();
                 }else {
                     switch (indexAction){
                         case 0:
@@ -299,7 +297,7 @@ public class MentalCommandActivity extends Activity implements EngineInterface {
         progressBarTime.setVisibility(View.INVISIBLE);
         btnTrain.setText("Train");
         enableClick();
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MentalCommandActivity.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MentalCommand.this);
         alertDialogBuilder.setTitle("Trainning Succeeded");
         alertDialogBuilder.setMessage("Training is successful. Accept this training?")
                 .setCancelable(false)
@@ -326,7 +324,7 @@ public class MentalCommandActivity extends Activity implements EngineInterface {
         progressBarTime.setVisibility(View.INVISIBLE);
         btnTrain.setText("Train");
         enableClick();
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MentalCommandActivity.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MentalCommand.this);
         alertDialogBuilder.setTitle("Trainning Failed");
         alertDialogBuilder.setMessage("Signal is noisy. Can't training")
                 .setCancelable(false)
@@ -416,9 +414,5 @@ public class MentalCommandActivity extends Activity implements EngineInterface {
         tvTime.setText("" + time);
     }
 
-    @Override
-    public void onBackPressed() {
-        android.os.Process.killProcess(android.os.Process.myPid());
-        finish();
-    }
+
 }

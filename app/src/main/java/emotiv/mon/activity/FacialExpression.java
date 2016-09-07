@@ -3,7 +3,6 @@ package emotiv.mon.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
@@ -71,10 +70,12 @@ public class FacialExpression extends Activity implements EngineInterface {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facial);
-        EngineConnector.setContext(this);
         engineConnector = EngineConnector.shareInstance();
         engineConnector.delegate = this;
+        init();
+    }
 
+    private void init(){
         mappingAction = new Vector<String>();
         mappingAction.add("Neutral");
         mappingAction.add("Pull");
@@ -228,7 +229,6 @@ public class FacialExpression extends Activity implements EngineInterface {
                 mHandlerUpdateUI.sendEmptyMessage(1);
             }
         }, 0, 20);
-
     }
 
     public Handler mHandlerUpdateUI = new Handler(){
@@ -513,8 +513,4 @@ public class FacialExpression extends Activity implements EngineInterface {
         currentRunningAction = mappingAction.elementAt(index);
     }
 
-    public void onBackPressed() {
-        android.os.Process.killProcess(android.os.Process.myPid());
-        finish();
-    }
 }
