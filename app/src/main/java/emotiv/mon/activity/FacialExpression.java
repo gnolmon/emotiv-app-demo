@@ -40,7 +40,7 @@ public class FacialExpression extends Activity implements EngineInterface {
 
     Spinner spinner,spinnerSensitive;
     CustomSpinner spinner2;
-    TimerTask timerTask,timerTaskAnimation;
+    TimerTask timerTask, timerTaskAnimation;
     SpinnerAdapter adapter, adapterSpinnerAction, adapterSensitive;
     ImageView imgBox;
     ProgressBar barTime,powerBar;
@@ -262,9 +262,7 @@ public class FacialExpression extends Activity implements EngineInterface {
             imgBox.setScaleY(1.0f);
         }
         if(( currentRunningAction.equals("Neutral"))  || (currentRunningAction.equals("Right")) && power > 0) {
-
             if(imgBox.getScaleX() == 1.0f && startLeft > 0) {
-
                 imgBox.setRight((int) widthScreen);
                 power = ( currentRunningAction.equals("Left")) ? power*3 : power*-3;
                 imgBox.setLeft((int) (power > 0 ? Math.max(0, (int)(imgBox.getLeft() - power)) : Math.min(widthScreen - imgBox.getMeasuredWidth(), (int)(imgBox.getLeft() - power))));
@@ -377,7 +375,6 @@ public class FacialExpression extends Activity implements EngineInterface {
     @Override
     public void trainStarted() {
         barTime.setVisibility(View.VISIBLE);
-        Log.d("STEP:", "1");
         spinner.setClickable(false);
         spinner2.setClickable(false);
         btClear.setClickable(false);
@@ -512,5 +509,4 @@ public class FacialExpression extends Activity implements EngineInterface {
         powerBar.setProgress((int) (power*100));
         currentRunningAction = mappingAction.elementAt(index);
     }
-
 }

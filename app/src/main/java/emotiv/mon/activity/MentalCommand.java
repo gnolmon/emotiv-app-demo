@@ -413,6 +413,4 @@ public class MentalCommand extends Activity implements EngineInterface {
         _currentPower  = power;
         tvTime.setText("" + time);
     }
-
-
 }
