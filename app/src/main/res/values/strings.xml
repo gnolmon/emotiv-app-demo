@@ -2,5 +2,6 @@
     <string name="app_name">EmotivMon</string>
     <string name="title_activity_trainning_mental">Trainning Mental Command</string>
     <string name="title_activity_trainning_facial">Trainning Facial Expression</string>
+    <string name="title_activity_motion_logger">Motion Logger</string>
     <string name="app_intro">Introduction</string>
 </resources>

@@ -44,11 +44,16 @@
         <activity
             android:name="emotiv.mon.activity.FacialExpression"
             android:label="@string/title_activity_trainning_facial">
+        </activity>
+        <activity
+            android:name="emotiv.mon.activity.MotionLogger"
+            android:label="@string/title_activity_motion_logger">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
