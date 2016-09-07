@@ -17,5 +17,5 @@ public interface EngineInterface {
 
     // detection
     public void detectedActionLowerFace(int typeAction, float power);
-    public void currentAction(int typeAction,float power);
+    public void currentAction(int typeAction,float power, float time);
 }

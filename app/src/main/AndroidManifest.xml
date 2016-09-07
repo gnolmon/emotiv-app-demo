@@ -36,10 +36,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="emotiv.mon.activity.MentalCommandActivity"
             android:label="@string/title_activity_trainning_mental">
+
         </activity>
         <activity
             android:name="emotiv.mon.activity.FacialExpression"
@@ -48,10 +53,6 @@
         <activity
             android:name="emotiv.mon.activity.MotionLogger"
             android:label="@string/title_activity_motion_logger">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
     </application>

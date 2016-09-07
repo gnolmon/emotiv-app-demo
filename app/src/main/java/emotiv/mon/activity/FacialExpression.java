@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.emotiv.insight.FacialExpressionDetection;
@@ -45,6 +46,7 @@ public class FacialExpression extends Activity implements EngineInterface {
     ImageView imgBox;
     ProgressBar barTime,powerBar;
     Timer timer;
+    TextView tvTime;
     boolean mapping= false;
     int indexActionSellected = 0;
 
@@ -87,6 +89,7 @@ public class FacialExpression extends Activity implements EngineInterface {
         barTime = (ProgressBar) this.findViewById(R.id.progressTimer);
         powerBar = (ProgressBar) this.findViewById(R.id.ProgressBarpower);
         imgBox = (ImageView) this.findViewById(R.id.imgBox);
+        tvTime = (TextView) this.findViewById(R.id.tvTime);
         btStartTrainning = (Button)this.findViewById(R.id.btStartTrainning);
         btClear = (Button)this.findViewById(R.id.btClear);
 
@@ -500,14 +503,14 @@ public class FacialExpression extends Activity implements EngineInterface {
             runAnimation(indexActionSellected,power);
     }
 
+    @Override
+    public void currentAction(int typeAction, float power, float time) {
+        tvTime.setText("" + time);
+    }
+
     private void runAnimation(int index,float power){
         powerBar.setProgress((int) (power*100));
         currentRunningAction = mappingAction.elementAt(index);
-    }
-
-    @Override
-    public void currentAction(int typeAction, float power) {
-
     }
 
     public void onBackPressed() {

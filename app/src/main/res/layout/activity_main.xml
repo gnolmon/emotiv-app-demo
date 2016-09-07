@@ -7,10 +7,45 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#2b2b2b"
     tools:context=".activity.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <Button
+        android:id="@+id/btnMental"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/trainbtshap"
+        android:clickable="true"
+        android:text="Mental Command"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:onClick="mentalClick" />
+    <Button
+        android:id="@+id/btnFacial"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/trainbtshap"
+        android:layout_below="@id/btnMental"
+        android:clickable="true"
+        android:text="Facial Expression"
+        android:textColor="#ffffff"
+        android:textSize="20dip"
+        android:onClick="facialClick" />
+    <Button
+        android:id="@+id/btnMotionLogger"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/trainbtshap"
+        android:layout_below="@id/btnFacial"
+        android:clickable="true"
+        android:text="Motion Logger"
+        android:textColor="#ffffff"
+        android:textSize="20dip"
+        android:onClick="motionClick" />
 </RelativeLayout>

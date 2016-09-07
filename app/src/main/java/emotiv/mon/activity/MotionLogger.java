@@ -12,15 +12,21 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.emotiv.insight.IEdk;
 import com.emotiv.insight.IEdkErrorCode;
+import com.emotiv.insight.IEmoStateDLL;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import emotiv.mon.R;
 
@@ -37,6 +43,13 @@ public class MotionLogger extends Activity {
     int userId;
     private BufferedWriter motion_writer;
     Button Start_button,Stop_button;
+
+    private Timer timer;
+    private TimerTask timerTask;
+    private int state;
+    protected static final int TYPE_EMOSTATE_UPDATE= 64;
+
+    TextView tvTime;
     IEdk.IEE_MotionDataChannel_t[] Channel_list = {IEdk.IEE_MotionDataChannel_t.IMD_COUNTER, IEdk.IEE_MotionDataChannel_t.IMD_GYROX,IEdk.IEE_MotionDataChannel_t.IMD_GYROY,
             IEdk.IEE_MotionDataChannel_t.IMD_GYROZ,IEdk.IEE_MotionDataChannel_t.IMD_ACCX,IEdk.IEE_MotionDataChannel_t.IMD_ACCY,IEdk.IEE_MotionDataChannel_t.IMD_ACCZ,
             IEdk.IEE_MotionDataChannel_t.IMD_MAGX,IEdk.IEE_MotionDataChannel_t.IMD_MAGY,IEdk.IEE_MotionDataChannel_t.IMD_MAGZ,IEdk.IEE_MotionDataChannel_t.IMD_TIMESTAMP};
@@ -54,8 +67,10 @@ public class MotionLogger extends Activity {
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
         }
-        Start_button = (Button)findViewById(R.id.startbutton);
-        Stop_button  = (Button)findViewById(R.id.stopbutton);
+
+        tvTime = (TextView) findViewById(R.id.tvTime);
+        Start_button = (Button) findViewById(R.id.startbutton);
+        Stop_button  = (Button) findViewById(R.id.stopbutton);
 
         Start_button.setOnClickListener(new View.OnClickListener() {
 
@@ -103,7 +118,29 @@ public class MotionLogger extends Activity {
             }
         };
         processingThread.start();
+
+        timer = new Timer();
+        doRepeatTask();
+        timer.schedule(timerTask, 0, 10);
     }
+
+    private void doRepeatTask(){
+        if (timerTask != null) return;
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                state = IEdk.IEE_EngineGetNextEvent();
+                if(state == IEdkErrorCode.EDK_OK.ToInt()){
+                    int eventType = IEdk.IEE_EmoEngineEventGetType();
+                    if (eventType == TYPE_EMOSTATE_UPDATE){
+                        IEdk.IEE_EmoEngineEventGetEmoState();
+                        handler.sendEmptyMessage(3);
+                    }
+                }
+            }
+        };
+    }
+
 
     Handler handler = new Handler(){
         @Override
@@ -123,7 +160,6 @@ public class MotionLogger extends Activity {
                             isEnablGetData = false;
                         }
                     }
-
                     break;
                 case 1:
                     int number = IEdk.IEE_GetInsightDeviceCount();
@@ -153,8 +189,13 @@ public class MotionLogger extends Activity {
                         }
                     }
                     break;
+                case 3:
+                    tvTime.setText("" + IEmoStateDLL.IS_GetTimeFromStart());
+                    Log.d("Time", "" + IEmoStateDLL.IS_GetTimeFromStart());
+                    break;
+                default:
+                    break;
             }
-
         }
 
     };

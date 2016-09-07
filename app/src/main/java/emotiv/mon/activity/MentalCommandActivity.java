@@ -15,10 +15,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.emotiv.insight.IEmoStateDLL;
 import com.emotiv.insight.MentalCommandDetection;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -36,10 +39,11 @@ import emotiv.mon.spinner.SpinnerModel;
 public class MentalCommandActivity extends Activity implements EngineInterface {
     EngineConnector engineConnector;
     Spinner spinAction;
-    Button btnTrain,btnClear;
+    Button btnTrain, btnClear;
     ProgressBar progressBarTime,progressPower;
     SpinnerAdapter spinAdapter;
     ImageView imgBox;
+    TextView tvTime;
     ArrayList<SpinnerModel> model = new ArrayList<SpinnerModel>();
 
     Timer timer;
@@ -74,6 +78,7 @@ public class MentalCommandActivity extends Activity implements EngineInterface {
         progressBarTime = (ProgressBar) findViewById(R.id.progressBarTime);
         progressPower = (ProgressBar) findViewById(R.id.ProgressBarpower);
         imgBox = (ImageView) findViewById(R.id.imgBox);
+        tvTime = (TextView) findViewById(R.id.tvTime);
 
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -404,10 +409,11 @@ public class MentalCommandActivity extends Activity implements EngineInterface {
     }
 
     @Override
-    public void currentAction(int typeAction, float power) {
+    public void currentAction(int typeAction, float power, float time) {
         progressPower.setProgress((int)(power*100));
         _currentAction = typeAction;
         _currentPower  = power;
+        tvTime.setText("" + time);
     }
 
     @Override

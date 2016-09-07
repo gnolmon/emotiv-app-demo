@@ -193,7 +193,7 @@ public class EngineConnector {
                 case HANDLER_ACTION_CURRENT:
                     if (delegate != null)
                         delegate.currentAction(IEmoStateDLL.IS_MentalCommandGetCurrentAction(),
-                                IEmoStateDLL.IS_MentalCommandGetCurrentActionPower());
+                                IEmoStateDLL.IS_MentalCommandGetCurrentActionPower(), IEmoStateDLL.IS_GetTimeFromStart());
                     break;
                 case HANDLER_TRAIN_STARTED:
                     if (delegate != null)
@@ -222,6 +222,7 @@ public class EngineConnector {
                 case HANDLER_TRAINED_RESET:
                     if (delegate != null)
                         delegate.trainReset();
+
                     break;
                 default:
                     break;
